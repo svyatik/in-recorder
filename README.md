@@ -1,2 +1,2 @@
 # in-recorder
-Just small screen recorder with server uploads
+Just small screen recorder that uploads video to server

@@ -2,12 +2,18 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>InRecorder - Video</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
   </head>
   <style>
   body {
     position: relative;
   }
+
+  * {
+    font-family: 'Noto Sans', sans-serif;
+  }
+
     video {
       width: 100%;
     }
@@ -58,19 +64,25 @@
     .play-green:hover {
       background-color: #0e7561;
     }
+
+    #link_text {
+      margin: 5px;
+      margin-right: 25px;
+    }
   </style>
   <body>
     <video src="./tmp/video.webm" controls autoplay></video>
-    
+
     <footer>
-      <button class="play-btn play-gray">Save</button>
+      <!-- <button class="play-btn play-gray">Save</button> -->
+      <p id="link_text" style="display: none">Uploaded! <a href="#" id="link"></a></p>
       <button class="play-btn play-green" id="upload">Upload</button>
     </footer>
 
     <script>
+      const open = require("open");
       document.getElementById('upload').addEventListener('click', function(e) {
         console.log('uploading ...');
-        // console.log("Avrora: "+avrora);
 
         var formData = new FormData();
 
@@ -79,22 +91,21 @@
           if (err) {
             return console.log(err);
           }
-          // data = new Uint8Array(data);
 
           console.log(data);
-
-/*          data = data.buffer;
-
-          console.log(data);*/
-
-          // formData.append("video", data, "video.webm");
-
-          
 
           var xhttp = new XMLHttpRequest();
           xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-             console.log("server: ", this.responseText);
+              console.log("server: ", this.responseText);
+
+              if(this.responseText !== 'error') {
+                document.getElementById('upload').style.display = 'none';
+                document.getElementById('link_text').style.display = 'block';
+
+                document.getElementById('link').href = this.responseText;
+                document.getElementById('link').innerHTML = this.responseText;
+              }
             }
           };
 
@@ -102,11 +113,13 @@
           xhttp.setRequestHeader("X-FILENAME", "video.webm");
           xhttp.send(data);
         });
+      });
 
+      document.getElementById('link').addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log("Link to open: ", document.getElementById('link').href);
 
-        
-
-        
+        open(document.getElementById('link').href);
       });
     </script>
   </body>

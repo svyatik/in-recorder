@@ -201,9 +201,9 @@ document.getElementById('stop').addEventListener('click', function(e) {
         console.log('stop recording')
 })
 
-document.getElementById('test_open').addEventListener('click', function(e) {
+/*document.getElementById('test_open').addEventListener('click', function(e) {
     createAnotherWindow()
-});
+});*/
 
 const electron = require('electron')
 const BrowserWindow = electron.remote.BrowserWindow
@@ -214,7 +214,7 @@ const url = require('url')
 function createAnotherWindow() {
     console.log('create another window')
   // Create the browser window.
-  videoWindow = new BrowserWindow({width: 980, height: 628, frame: true})
+  videoWindow = new BrowserWindow({width: 980, height: 638, frame: true})
   videoWindow.setMenu(null)
   videoWindow.show()
 
@@ -226,7 +226,7 @@ function createAnotherWindow() {
   }))
 
   // Open the DevTools.
-  videoWindow.webContents.openDevTools()
+  // videoWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   videoWindow.on('closed', function () {
