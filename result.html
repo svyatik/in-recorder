@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+  </head>
+  <style>
+  body {
+    position: relative;
+  }
+    video {
+      width: 100%;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      left: 0;
+      background-color: #fff;
+      height: 32px;
+      text-align: right;
+      padding: 15px;
+    }
+
+    .play-btn {
+     background-color: transparent;
+     border: none;
+     /* background-color: #e74c3c; */
+     font-size: 16px;
+     padding: 4px 11px 4px 6px;
+     /* display: block; */
+     /* margin: 25px auto 0 auto; */
+     display: inline-block;
+    }
+/*     .play-btn:hover {
+  background-color: #f7f7f7;
+} */
+
+    .play-gray {
+      color: #676767;
+          font-size: 14px;
+    }
+    .play-gray:hover {
+      /*border-bottom: 1px solid #676767;*/
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .play-green {
+      background-color: #16a085;
+      color: #fff;
+      border-radius: 3px;
+      padding: 6px 18px;
+      margin-right: 35px;
+    }
+
+    .play-green:hover {
+      background-color: #0e7561;
+    }
+  </style>
+  <body>
+    <video src="./tmp/video.webm" controls autoplay></video>
+    
+    <footer>
+      <button class="play-btn play-gray">Save</button>
+      <button class="play-btn play-green" id="upload">Upload</button>
+    </footer>
+
+    <script>
+      document.getElementById('upload').addEventListener('click', function(e) {
+        console.log('uploading ...');
+        // console.log("Avrora: "+avrora);
+
+        var formData = new FormData();
+
+        var fs = require('fs')
+        fs.readFile('./tmp/video.webm', function (err,data) {
+          if (err) {
+            return console.log(err);
+          }
+          // data = new Uint8Array(data);
+
+          console.log(data);
+
+/*          data = data.buffer;
+
+          console.log(data);*/
+
+          // formData.append("video", data, "video.webm");
+
+          
+
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+             console.log("server: ", this.responseText);
+            }
+          };
+
+          xhttp.open("POST", "http://work.local/server.php", true);
+          xhttp.setRequestHeader("X-FILENAME", "video.webm");
+          xhttp.send(data);
+        });
+
+
+        
+
+        
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "in-recorder",
+  "version": "1.0.0",
+  "description": "Screen recording app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "n"
+  },
+  "keywords": [
+    "Screen",
+    "record"
+  ],
+  "author": "Svyat",
+  "license": "MIT",
+  "dependencies": {
+    "blob-to-buffer": "^1.2.6",
+    "electron": "^1.7.9"
+  }
+}

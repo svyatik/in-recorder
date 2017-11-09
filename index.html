@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+  </head>
+  <style>
+
+  @font-face {
+    font-family: 'recorder';
+    src: url('recorder.woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+   [class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: "recorder";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+   
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    /* opacity: .8; */
+   
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    text-transform: none;
+       
+    /* fix buttons height, for twitter bootstrap */
+    line-height: 1em;
+   
+    /* Animation center compensation - margins should be symmetric */
+    /* remove if not needed */
+    margin-left: .2em;
+   
+    /* you can be more comfortable with increased icons size */
+    /* font-size: 120%; */
+   
+    /* Uncomment for 3D effect */
+    /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+  }
+
+
+  .icon-cancel:before { content: '\e800'; } /* '' */
+  .icon-minus:before { content: '\e801'; } /* '' */
+  .icon-resize-full:before { content: '\e802'; } /* '' */
+  .icon-record:before { content: '\e803'; } /* '' */
+  .icon-pause:before { content: '\e804'; } /* '' */
+  .icon-stop:before { content: '\e805'; } /* '' */
+
+  body {
+    margin: 0;
+    position: relative;
+    height: 100vh;
+  }
+  * {
+    font-family: 'Noto Sans', sans-serif;
+  }
+
+
+  .header {
+    text-align: right;
+  }
+
+  button#close {
+    width: 24px;
+    height: 24px;
+  }
+
+
+  .wrapper {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .wrapper-top {
+    padding-top: 50px;
+    text-align: center;
+  }
+
+  .wrapper2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: scale(0);
+    visibility: hidden;
+    opacity: 0;
+    transition: all .3s;
+    background-color: #fff;
+  }
+  .wrapper2.active {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(1);
+    visibility: visible;
+    opacity: 1;
+  }
+
+    .play-btn {
+     background-color: transparent;
+     border: none;
+     color: #e74c3c;
+     font-size: 20px;
+     padding: 4px 11px 4px 6px;
+     display: block;
+     margin: 25px auto 0 auto;
+    }
+    .play-btn:hover {
+      background-color: #f7f7f7;
+    }
+
+
+    button.full {
+      background-color: transparent;
+      border: none;
+      display: inline-block;
+      font-size: 16px;
+      width: 120px;
+      color: #34495e;
+      margin: 0 5px 25px 5px;
+      outline: none;
+      border-bottom: 2px solid transparent;
+    }
+    button.full i {
+      margin-right: 5px;
+    }
+    button.full img {
+      width: 42px;
+      display: block;
+      opacity: .75;
+      margin: 8px auto;
+    }
+    button.full:hover {
+      background-color: #f7f7f7;
+    }
+    button.full:active {
+      transform: scale(0.95);
+    }
+    button.full.active {
+      border-color: #27ae60;
+    }
+
+    footer {
+      background-color: #ecf0f1;
+      height: 32px;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+    }
+
+    .recording {
+      font-size: 14px;
+      color: #504f4f;
+      margin: 0;
+    }
+
+    .recording + #timer {
+      margin-top: 5px;
+    }
+
+    .play-pause {
+      color: #1abc9c;
+    }
+
+    .wrapper-bottom {
+      text-align: center;
+      padding-top: 15px;
+    }
+    .wrapper-bottom button {
+      display: inline-block;
+      margin: 0 20px;
+    }
+  </style>
+  <body>
+<!--     <div class="header">
+  <button id="close">X</button>
+</div> -->
+
+    <div class="wrapper">
+      <div class="wrapper-top">
+        <button class="full active"><img src="./img/full_screen.png" alt>Full screen</button>
+        <button class="full"><img src="./img/window_screen.png" alt>Select window</button>
+      </div>
+
+
+      <button class="play-btn" id="record"><i class="icon-record"></i>Record</button>
+      <button id="test_open">open video</button>
+    </div>
+
+    <div class="wrapper2">
+      <div class="wrapper-top">
+        <p class="recording">Recording</p>
+        <h2 id="timer">0:00</h2>
+      </div>
+
+      <div class="wrapper-bottom">
+        <button class="play-btn play-pause"><i class="icon-pause"></i>Pause</button>
+        <button class="play-btn" id="stop"><i class="icon-stop"></i>Stop</button>
+      </div>
+    </div>
+
+
+    <footer>
+      
+    </footer>
+
+    <script>
+      // You can also require other files to run in this process
+      require('./renderer.js')
+    </script>
+  </body>
+</html>
