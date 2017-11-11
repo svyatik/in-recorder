@@ -2,3 +2,5 @@ http://www.smart-screen-recorder.com/images/shot.gif
 https://cdn.dribbble.com/users/883236/screenshots/3362181/screen_recording_ui_design-.png
 
 https://github.com/sidorares/ntk
+
+npm start --enable-transparent-visuals --disable-gpu

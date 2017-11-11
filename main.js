@@ -14,7 +14,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 490, height: 372, resizable: false})
+  mainWindow = new BrowserWindow({width: 490, height: 372, frame: true, resizable: false, transparent: false})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -24,6 +24,8 @@ function createWindow () {
   }))
 
   mainWindow.setMenu(null);
+  // mainWindow.setIgnoreMouseEvents(true);
+  // mainWindow.setAlwaysOnTop(true);
   // mainWindow.setResizable(false);
 
   // Open the DevTools.
