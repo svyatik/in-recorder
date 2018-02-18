@@ -53,6 +53,17 @@
       cursor: pointer;
     }
 
+    .play-link {
+      border-radius: 3px;
+      padding: 6px 18px;
+      margin-right: 10px;
+      color: #3a3a3a;
+    }
+
+    .play-link:hover {
+      background-color: #ecf0f1;
+    }
+
     .play-green {
       background-color: #16a085;
       color: #fff;
@@ -75,12 +86,23 @@
 
     <footer>
       <!-- <button class="play-btn play-gray">Save</button> -->
+      <button class="play-btn play-link" id="save">Save</button>
       <p id="link_text" style="display: none">Uploaded! <a href="#" id="link"></a></p>
       <button class="play-btn play-green" id="upload">Upload</button>
     </footer>
 
     <script>
       const open = require("open");
+
+      const electron = require('electron');
+      // const remote = electron.remote;
+
+      const remote = require('electron').remote;
+      const dialog = require('electron').remote.dialog;
+
+      // const dialog = remote.require('dialog');
+
+
       document.getElementById('upload').addEventListener('click', function(e) {
         console.log('uploading ...');
 
@@ -121,6 +143,31 @@
 
         open(document.getElementById('link').href);
       });
+
+      document.getElementById('save').addEventListener('click', function(e) {
+        console.log('save a file');
+
+        saveFile()
+      });
+
+
+      var fs = require('fs'); // require only if you don't already have it
+
+      function saveFile () {
+        dialog.showSaveDialog({
+          filters: [{
+            name: 'WebM/VP8 File',
+            extensions: ['webm']
+          }]
+        }, function (fileName) {
+          if (fileName === undefined) return;
+          console.log('file', fileName);
+
+          var fs = require('fs');
+          fs.createReadStream('./tmp/video.webm').pipe(fs.createWriteStream(fileName));
+        });
+
+      }
     </script>
   </body>
 </html>

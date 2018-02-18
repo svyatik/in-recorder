@@ -14,19 +14,24 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 490, height: 372, frame: true, resizable: false, transparent: false})
+  // mainWindow = new BrowserWindow({/*width: 490, height: 372,*/ useContentSize: true, frame: true, resizable: false, transparent: true})
+  // mainWindow = new BrowserWindow({width: 592, height: 64, /*left: 0, top: 0,*/ transparent: true, frame: true})
+
+  mainWindow = new BrowserWindow({width: 592, height: 64, transparent: false, frame: false})
+  // mainWindow = new BrowserWindow({width: 1000, height: 450, transparent: true, frame: true})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
+    pathname: path.join(__dirname, 'application.html'),
     protocol: 'file:',
     slashes: true
   }))
 
   mainWindow.setMenu(null);
   // mainWindow.setIgnoreMouseEvents(true);
-  // mainWindow.setAlwaysOnTop(true);
-  // mainWindow.setResizable(false);
+  mainWindow.setAlwaysOnTop(true);
+  // mainWindow.setResizable(true);
+  // mainWindow.setFullScreen(true);
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

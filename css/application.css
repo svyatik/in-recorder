@@ -1,0 +1,385 @@
+@font-face {
+  font-family: 'application';
+  src: url('../application.woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon {
+  font-family: "application";
+  font-style: normal;
+  font-weight: normal;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  margin-left: .2em;
+}
+
+.icon-cancel:before { content: '\e800'; }
+.icon-resize-full-alt:before { content: '\e801'; }
+.icon-dot-3:before { content: '\e802'; }
+.icon-record:before { content: '\e803'; }
+
+
+body {
+  margin: 0;
+  overflow: hidden;
+  -webkit-app-region: drag;
+
+
+  /*margin: 10px;*/
+
+  /*margin-top: 80px;*/
+  /*margin-left: 120px;*/
+}
+
+.wrapper {
+  width: 592px;
+  height: 64px;
+  background-color: #fff;
+  /*border-radius: 15px;*/
+  background-color: #f5f2f2;
+  position: relative;
+
+/*   -webkit-box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.54);
+-moz-box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.54);
+box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.54); */
+
+  /*margin: 10px;*/
+}
+
+.wrapper .bgroup {
+  height: 100%;
+  position: relative;
+  display: inline-block;
+}
+
+.wrapper .left-group {
+  background-color: #34495e;
+  width: 90px;
+  /*border-radius: 10px 0 0 10px;*/
+}
+
+.wrapper .bgroup::before {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 100%;
+  top: 0;
+  border-radius: 50%;
+}
+
+.wrapper .left-group::before {
+  background-color: #34495e;
+  right: -10px;
+}
+
+.wrapper #movable {
+  width: 24px;
+  height: 100%;
+  vertical-align: bottom;
+  color: #ccc;
+  cursor: move;
+  display: inline-block;
+}
+
+.wrapper #movable > i {
+  transform: rotate(90deg);
+  margin-top: 22px;
+}
+
+
+.ellipse {
+  width: 42px;
+  height: 42px;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 22px;
+  position: relative;
+  background-color: transparent;
+  vertical-align: top;
+  margin-top: 11px;
+  margin-left: 6px;
+  outline: none;
+}
+
+.ellipse::before {
+  content: '';
+  background-color: #3498db;
+  width: 60px;
+  height: 60px;
+  top: -9px;
+  left: -9px;
+  border-radius: 50%;
+  position: absolute;
+  opacity: 1;
+  transform: scale(.6);
+  animation-name: ellipse-anim;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-duration: 3s;
+  transition: background-color .3s;
+}
+
+.ellipse:active {
+  animation-name: ellipse-anim;
+}
+
+.ellipse:hover > .ellipse-front {
+  background-color: #4ca7e4;
+}
+
+@keyframes ellipse-anim {
+  0% {
+    transform: scale(.6);
+    opacity: 1;
+  }
+
+  30% {
+    transform: scale(1);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+
+/*   70% {
+  transform: scale(.6);
+  opacity: 1;
+}
+
+100% {
+  transform: scale(1);
+  opacity: 0;
+} */
+}
+
+.ellipse > .ellipse-front {
+  background-color: #3498db;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.ellipse > .ellipse-record {
+  background-color: #fff;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+  border-radius: 50%;
+  transition: all .4s;
+  /*z-index: 2;*/
+}
+
+.ellipse > .ellipse-front {
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  transition: border-color .34s;
+}
+
+
+.ellipse.active::before {
+  background-color: #c0392b;
+}
+
+.ellipse.active > .ellipse-front {
+  background-color: #c0392b;
+}
+
+.ellipse.active > .ellipse-record {
+  border-radius: 0;
+}
+
+
+.ellipse:hover > .ellipse-front {
+  border-color: #f5f2f2;
+}
+
+/* .ellipse:hover > .ellipse-record {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  margin-left: 0;
+  margin-top: 0;
+  opacity: 0;
+} */
+/* 
+.ellipse > i {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  left: 6px;
+} */
+
+
+.wrapper > .time {
+  background-color: #adb6bb;
+  width: 200px;
+  height: 48px;
+  display: inline-block;
+  margin: 8px 25px 0;
+  border-radius: 8px;
+  color: #fff;
+  font-family: Arial;
+  font-size: 20px;
+  line-height: 35px;
+  text-align: center;
+  vertical-align: top;
+  position: relative;
+}
+
+.wrapper > .time p {
+  margin: 0;
+}
+
+.wrapper > .time span {
+  font-size: 10px;
+}
+
+
+.wrapper .time > .time_messages {
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  height: 29px;
+  width: 100%;
+  text-align: left;
+}
+
+.wrapper .time > .time_messages span {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 25px;
+  transition: all .3s;
+}
+
+.wrapper .time > .time_messages span.active {
+  top: 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.wrapper .icon-button {
+  display: inline-block;
+  vertical-align: top;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  line-height: 0;
+
+  padding: 6px;
+
+  /*border: 1px solid black;*/
+}
+
+.wrapper .icon-button-norm {
+   margin-top: 2px;
+/*width: 52px; */
+  border-bottom: 2px solid transparent;
+}
+
+.wrapper .icon-button-norm:not(.active):hover {
+  background-color: #e8e5e5;
+}
+
+.wrapper .icon-button-norm.active {
+  border-bottom-color: #346890;
+}
+
+.wrapper .icon-button-norm > img {
+  width: 32px;
+  /*margin-top: 9px;*/
+}
+
+
+.wrapper .buttons_group {
+  border-right: 1px solid #ccd1d4;
+  /*margin-right: 25px;*/
+  padding-right: 25px;
+  margin-top: 6px;
+  display: inline-block;
+  vertical-align: top;
+  height: 80%;
+}
+
+
+.wrapper .right-group {
+  background-color: #7f8c8d;
+  width: 64px;
+  vertical-align: top;
+  /*border-radius: 0 10px 10px 0;*/
+  /*margin-left: 16px;*/
+}
+
+.wrapper .icon-button-norm#button_login {
+  margin-top: 9px;
+  margin-left: 10px;
+}
+
+.right-group::before {
+  background-color: #f5f2f2;
+  left: -10px;
+}
+
+.right-group > .icon-button-close {
+  width: 48px;
+  height: 48px;
+  margin-top: 7px;
+  margin-left: 15px;
+  opacity: .6;
+  padding: 0;
+  animation-duration: .6s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes close_button {
+  0% {
+    transform: scale(1.0);
+    opacity: .6;
+  }
+
+  50% {
+    transform: scale(1.16);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.0);
+    opacity: 1;
+  }
+}
+
+.right-group > .icon-button-close:hover {
+  /*transform: rotate(15deg);*/
+  animation-name: close_button;
+}
+
+.right-group > .icon-button-close > img {
+  width: 22px;
+  margin-left: -3px;
+  margin-top: 0px;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
+}

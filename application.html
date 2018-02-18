@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Application</title>
+  <link rel="stylesheet" href="css/application.css">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="bgroup left-group">
+      <div id="movable">
+        <i class="icon icon-dot-3"></i>
+      </div>
+      <button class="ellipse ellipse-red no-drag" id="button_recorder">
+        <span class="ellipse-front"></span>
+        <span class="ellipse-record"></span>
+        <!-- <i class="icon icon-record"></i> -->
+      </button>
+    </div>
+
+    <div class="time">
+      <p id="timer">00:00</p>
+      <!-- Ready... -->
+
+      <div class="time_messages">
+        <span id="msg_1" class="active">Please, consider to <b>log_in</b></span>
+        <span id="msg_2">Recording...</span>
+        <!-- <span id="msg_2" class="active">Check this to select specific area</span> -->
+        
+      </div>
+    </div>
+
+
+    <div class="buttons_group">
+      <button class="icon-button icon-button-norm no-drag active" id="button_region">
+        <img src="img/select-region.svg" alt="">
+      </button>
+
+      <button class="icon-button icon-button-norm no-drag" id="button_full_screen">
+        <img src="img/full-screen.svg" alt="">
+      </button>
+    </div>
+
+    <button class="icon-button icon-button-norm no-drag" id="button_login">
+      <img src="img/login.svg" alt="">
+    </button>
+
+    <div class="bgroup right-group">
+      <button class="icon-button icon-button-close no-drag" id="btn_close">
+        <img src="img/close.svg" alt="">
+      </button>
+    </div>
+  </div>
+
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+</body>
+</html>

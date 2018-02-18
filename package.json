@@ -19,6 +19,7 @@
   "dependencies": {
     "blob-to-buffer": "^1.2.6",
     "electron": "^1.7.9",
+    "electron-drag": "^1.2.0",
     "open": "0.0.5"
   },
   "devDependencies": {

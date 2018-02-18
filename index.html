@@ -57,6 +57,8 @@
     margin: 0;
     position: relative;
     height: 100vh;
+    /*background-image: url(https://i1.wp.com/psdboom.com/wp-content/uploads/2014/07/dfgh.jpg?resize=900%2C675);*/
+    /*background-image: url(https://inspirationhut.net/wp-content/uploads/2014/01/design-background-10.jpg);*/
   }
   * {
     font-family: 'Noto Sans', sans-serif;
@@ -67,15 +69,24 @@
     text-align: right;
   }
 
-  #record {
-    margin-top: 100px;
-  }
+/*   #record {
+  margin-top: 100px;
+} */
 
   button#close {
     width: 24px;
     height: 24px;
   }
 
+  button#record {
+    padding: 12px 78px 12px 61px;
+    /* display: block; */
+    /* margin: 25px auto 0 auto; */
+    background-color: #ececec;
+    text-transform: uppercase;
+    font-size: 22px;
+    border-radius: 27px;
+  }
 
   .wrapper {
     text-align: center;
@@ -85,7 +96,7 @@
   }
 
   .wrapper-top {
-    padding-top: 50px;
+    padding-top: 15px;
     text-align: center;
   }
 
@@ -152,7 +163,7 @@
       transform: scale(0.95);
     }
     button.full.active {
-      border-color: #27ae60;
+      border-color: #e74c3c;
     }
 
     footer {
@@ -186,20 +197,84 @@
       display: inline-block;
       margin: 0 20px;
     }
+
+    .text-info {
+      font-size: 12px;
+      color: #7f8c8d;
+      margin-left: -100px;
+    }
+
+    h2 {
+
+      margin-bottom: 0;
+      margin-top: 0;
+      text-align: left;
+      padding-left: 20px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      /*background-color: rgba(255,255,255,.5);*/
+      color: #2c3e50;
+    }
+
+/*     .wrapper {
+  background-color: rgba(255,255,255,.8);
+} */
   </style>
   <body>
 <!--     <div class="header">
   <button id="close">X</button>
 </div> -->
 
+    <h2>InRecorder</h2>
     <div class="wrapper">
-<!--       <div class="wrapper-top">
-  <button class="full active"><img src="./img/full_screen.png" alt>Full screen</button>
-  <button class="full"><img src="./img/window_screen.png" alt>Select window</button>
-</div> -->
+      <div class="wrapper-top">
+        <!-- <p class="text-info">1. Select which part of screen you want to record..</p> -->
+        <button class="full active"><img src="./img/full_screen.png" alt>Full screen</button>
+        <button class="full"><img src="./img/window_screen.png" alt>Select window</button>
+      </div>
+
+      <!-- <p>2. Select which part of screen you want to record..</p> -->
+
+      <style>
+        .check {
+          margin-left: -100px;
+          margin-top: 5px;
+        }
+        .checkbox + label {
+          color: #34495e;
+          position: relative;
+          padding-left: 26px;
+        }
+        .checkbox {
+          display: none;
+        }
+        .checkbox + label::after {
+          content: '';
+          position: absolute;
+          width: 16px;
+          height: 16px;
+          top: 1px;
+          left: 0;
+          border: 2px solid #e74c3c;
+          background-color: #fff;
+          border-radius: 10px;
+        }
+      </style>
+
+      <!-- <p class="text-info">2. Check additional options..</p> -->
+      <div class="check">
+        <input class="checkbox" id="checkBox" type="checkbox">
+        <label for="checkBox">Record My Voice</label>
+
+        <input class="checkbox" id="checkBox1" type="checkbox" style="display: block; margin-bottom: -11px;">
+        <label for="checkBox1" style="margin-left: 36px;">Record System Audio</label>
+      </div>
+
+      <button class="play-btn" id="record"><i class="icon-record" style="margin-right: 16px;"></i>Record</button>
+      <p style="font-size: 10px; color: #7f8c8d;">In case of uploading, please record short videos</p>
 
 
-      <button class="play-btn" id="record"><i class="icon-record"></i>Record</button>
+      <p style="color: #7f8c8d; font-size: 14px; margin-top: 52px;">Use CTRL+ LEFT MOUSE to draw while recording</p>
       <!-- <button id="test_open">open video</button> -->
     </div>
 

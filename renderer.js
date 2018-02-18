@@ -5,7 +5,7 @@
 const fs = require('fs')
 const {desktopCapturer} = require('electron')
 const toBuffer = require('blob-to-buffer')
-// const remote = require('electron').remote;
+const remote = require('electron').remote;
 
 var recorder;
 var blobs = [];
@@ -161,45 +161,118 @@ function toBuffer(ab) {
 
 var record_process = false;
 let timer;
-document.getElementById('record').addEventListener('click', function(e) {
-    console.log('test');
-    document.getElementsByClassName('wrapper2')[0].classList.add('active')
+document.getElementById('button_recorder').addEventListener('click', function(e) {
+    // createAnotherWindow();
+    console.log('test')
 
-    const $timer_id = document.getElementById('timer')
+    // document.getElementsByClassName('wrapper2')[0].classList.add('active')
 
-    startRecording()
-    record_process = true
-    console.log('start recording')
 
-    let seconds = 0,
-        minutes = 0
+    if (!record_process) {
+        const $timer_id = document.getElementById('timer')
 
-    timer = setInterval(function() {
-        console.log(seconds.toString().length)
+        startRecording()
+        minimize()
+        record_process = true
+        console.log('start recording...')
 
-        seconds++;
+        let seconds = 0,
+            minutes = 0
 
-        if(seconds >= 60) {
-            minutes++
-            seconds = 0
-        }
+        timer = setInterval(function() {
+            // console.log(seconds.toString().length)
 
-        if(seconds.toString().length === 1)
-            $timer_id.innerHTML = minutes + ':0' + seconds
-        else
-            $timer_id.innerHTML = minutes + ':'+ seconds
+            seconds++
 
-    }, 1000)
+            if(seconds >= 60) {
+                minutes++
+                seconds = 0
+            }
+
+            let seconds_str = seconds,
+                minutes_str = minutes;
+
+            if(seconds.toString().length === 1) {
+                seconds_str = '0' + seconds
+                console.log();
+            }
+
+            if(minutes.toString().length === 1)
+                minutes_str = '0' + minutes;
+
+            // console.log('0' + seconds);
+
+            $timer_id.innerHTML = minutes_str + ':' + seconds_str;
+            /*else
+                $timer_id.innerHTML = minutes + ':'+ seconds*/
+
+        }, 1000)
+    } else {
+        // document.getElementsByClassName('wrapper2')[0].classList.remove('active')
+
+        stopRecording()
+        record_process = false
+        console.log('stop recording')
+        clearInterval(timer)
+
+        minimize()
+    }
 })
 
-document.getElementById('stop').addEventListener('click', function(e) {
+function minimize() {
+    var window = remote.getCurrentWindow()
+    window.minimize()
+}
+
+/*document.getElementById('stop').addEventListener('click', function(e) {
     console.log('test');
     document.getElementsByClassName('wrapper2')[0].classList.remove('active')
 
         stopRecording()
         record_process = false
         console.log('stop recording')
-})
+})*/
+
+
+// const remote = require('electron').remote;
+
+// window.onload = function() {
+    const $btn_region = document.getElementById('button_region');
+    const $btn_full_screen = document.getElementById('button_full_screen');
+    const $btn_recorder = document.getElementById('button_recorder');
+
+    $btn_region.onclick = function() {
+        $btn_region.classList.add('active');
+        $btn_full_screen.classList.remove('active');
+    }
+
+    $btn_full_screen.onclick = function() {
+        $btn_full_screen.classList.add('active');
+        $btn_region.classList.remove('active');
+    }
+
+    let recording = false;
+    $btn_recorder.onclick = function() {
+        if(recording) {
+            $btn_recorder.classList.remove('active');
+            recording = false;
+
+            document.getElementById('msg_2').classList.remove('active');
+            document.getElementById('msg_1').classList.add('active');
+        } else {
+            $btn_recorder.classList.add('active');
+            recording = true;
+
+            document.getElementById('msg_1').classList.remove('active');
+            document.getElementById('msg_2').classList.add('active');
+        }
+    }
+
+    document.getElementById("btn_close").onclick = function() {
+        var window = remote.getCurrentWindow();
+        window.close();
+    };
+// }
 
 /*document.getElementById('test_open').addEventListener('click', function(e) {
     createAnotherWindow()
