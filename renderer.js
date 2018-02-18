@@ -165,6 +165,10 @@ document.getElementById('button_recorder').addEventListener('click', function(e)
     // createAnotherWindow();
     console.log('test')
 
+    // setTimeout(minimize, 1000);
+
+    // return false;
+
     // document.getElementsByClassName('wrapper2')[0].classList.add('active')
 
 
@@ -172,7 +176,7 @@ document.getElementById('button_recorder').addEventListener('click', function(e)
         const $timer_id = document.getElementById('timer')
 
         startRecording()
-        minimize()
+        setTimeout(minimize, 1000)
         record_process = true
         console.log('start recording...')
 

@@ -1,0 +1,306 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  -webkit-app-region: drag;
+}
+
+@background: #f5f2f2;
+@left-group: #34495e;
+
+.wrapper {
+  width: 592px;
+  height: 64px;
+  background-color: @background;
+  position: relative;
+
+  .bgroup {
+    height: 100%;
+    position: relative;
+    display: inline-block;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 22px;
+      height: 100%;
+      top: 0;
+      border-radius: 50%;
+    }
+  }
+
+  .bgroup.left-group {
+    background-color: @left-group;
+    width: 90px;
+
+    &::before {
+      background-color: @left-group;
+      right: -10px;
+    }
+  }
+
+  #movable {
+    width: 24px;
+    height: 100%;
+    vertical-align: bottom;
+    color: #ccc;
+    cursor: move;
+    display: inline-block;
+
+    i {
+      transform: rotate(90deg);
+      margin-top: 22px;
+    }
+  }
+
+
+
+  @ellipse: #3498db;
+  @ellipse-bulb: #3498db;
+  @ellipse-dot: #fff;
+
+  @ellipse_active: #c0392b;
+
+  .ellipse {
+    width: 42px;
+    height: 42px;
+    text-align: center;
+    vertical-align: middle;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 22px;
+    position: relative;
+    background-color: transparent;
+    vertical-align: top;
+    margin-top: 11px;
+    margin-left: 6px;
+    outline: none;
+
+    &::before {
+      content: '';
+      background-color: @ellipse-bulb;
+      width: 60px;
+      height: 60px;
+      top: -9px;
+      left: -9px;
+      border-radius: 50%;
+      position: absolute;
+      opacity: 1;
+      transform: scale(.6);
+      animation-name: ellipse-anim;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      animation-duration: 3s;
+      transition: background-color .3s;
+    }
+
+    .ellipse-front {
+      background-color: @ellipse;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      position: absolute;
+      border: 2px solid transparent;
+      box-sizing: border-box;
+      transition: border-color .34s;
+    }
+
+    .ellipse-record {
+      background-color: @ellipse-dot;
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -8px;
+      margin-top: -8px;
+      border-radius: 50%;
+      transition: all .4s;
+    }
+
+    &.active {
+      animation-name: ellipse-anim;
+
+      &::before {
+        background-color: @ellipse_active;
+      }
+
+      .ellipse-front {
+        background-color: @ellipse_active;
+      }
+
+      .ellipse-record {
+        border-radius: 0;
+      }
+    }
+
+    &:hover {
+      .ellipse-front {
+        border-color: #f5f2f2;
+      }
+    }
+  }
+
+
+  .time {
+    background-color: #adb6bb;
+    width: 200px;
+    height: 48px;
+    display: inline-block;
+    margin: 8px 25px 0;
+    border-radius: 8px;
+    color: #fff;
+    font-family: Arial;
+    font-size: 20px;
+    line-height: 35px;
+    text-align: center;
+    vertical-align: top;
+    position: relative;
+
+    p {
+      margin: 0;
+    }
+
+    .time_messages {
+      position: absolute;
+      bottom: 0;
+      left: 15px;
+      height: 29px;
+      width: 100%;
+      text-align: left;
+
+      span {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        top: 25px;
+        transition: all .3s;
+        font-size: 10px;
+
+        &.active {
+          top: 0;
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+  }
+
+
+  .icon-button {
+    display: inline-block;
+    vertical-align: top;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    line-height: 0;
+    padding: 6px;
+  }
+
+  .icon-button-norm {
+    margin-top: 2px;
+    border-bottom: 2px solid transparent;
+
+    &.active {
+      border-bottom-color: #346890;
+    }
+
+    img {
+      width: 32px;
+    }
+  }
+
+  .icon-button-norm:not(.active):hover {
+    background-color: #e8e5e5;
+  }
+
+
+  .buttons_group {
+    border-right: 1px solid #ccd1d4;
+    padding-right: 25px;
+    margin-top: 6px;
+    display: inline-block;
+    vertical-align: top;
+    height: 80%;
+  }
+
+  .bgroup.right-group {
+    background-color: #7f8c8d;
+    width: 64px;
+    vertical-align: top;
+
+    &::before {
+      background-color: #f5f2f2;
+      left: -10px;
+    }
+
+    .icon-button-close {
+      width: 48px;
+      height: 48px;
+      margin-top: 7px;
+      margin-left: 15px;
+      opacity: .6;
+      padding: 0;
+      animation-duration: .6s;
+      animation-fill-mode: forwards;
+
+      img {
+        width: 22px;
+        margin-left: -3px;
+        margin-top: 0px;
+      }
+    }
+
+    .icon-button-close:hover {
+      animation-name: close_button;
+    }
+  }
+
+  .icon-button-norm#button_login {
+    margin-top: 9px;
+    margin-left: 10px;
+  }
+}
+
+
+@keyframes ellipse-anim {
+  0% {
+    transform: scale(.6);
+    opacity: 1;
+  }
+
+  30% {
+    transform: scale(1);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+
+@keyframes close_button {
+  0% {
+    transform: scale(1.0);
+    opacity: .6;
+  }
+
+  50% {
+    transform: scale(1.16);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.0);
+    opacity: 1;
+  }
+}
+
+
+.no-drag {
+  -webkit-app-region: no-drag;
+}
