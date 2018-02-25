@@ -1,6 +1,6 @@
 {
   "name": "in-recorder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Screen recording app",
   "main": "main.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "remote": "^0.2.6"
   },
   "devDependencies": {
+    "electron": "^1.7.9",
     "electron-packager": "^9.1.0",
     "grunt": "^1.0.2",
     "grunt-contrib-less": "^1.4.1",

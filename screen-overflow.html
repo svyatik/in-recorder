@@ -7,8 +7,14 @@
     body {
       margin: 0;
       height: 100vh;
+      
+    }
+    #wrapper {
       border: 3px dashed #e74c3c;
       box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      position: relative;
     }
     #canvas {
       width: 100%;
@@ -17,12 +23,94 @@
   </style>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
+  <div id="wrapper">
+    <canvas id="canvas"></canvas>
+  </div>
 
   <script>
+    const { ipcRenderer } = require('electron');
+
     window.onkeyup = function(e) {
-       console.log(e);
+      console.log(e);
     }
+
+
+
+    const $wrapper = document.getElementById('wrapper');
+
+    let drug = false;
+    let drug_direction = '';
+
+    document.body.addEventListener('mousedown', function() {
+      let x = event.clientX;
+      let y = event.clientY;
+      let left = $wrapper.offsetLeft;
+      let top = $wrapper.offsetTop;
+      let w_width = $wrapper.offsetWidth;
+      let h_height = $wrapper.offsetHeight;
+
+      drug = true;
+
+      if(x > left-12 && x < left+12) {
+        drug_direction = 'left';
+      } else if (x > (w_width+left)-12 && x < (w_width+left)+12) {
+        drug_direction = 'right';
+      } else if (y > top-12 && y < top+12) {
+        drug_direction = 'top';
+      } else if (y > (h_height+top)-12 && y < (h_height+top)+12) {
+        drug_direction = 'bottom';
+      }
+    });
+
+    document.body.addEventListener('mouseup', function() {
+      drug = false;
+      drug_direction = '';
+
+      ipcRenderer.send('asynchronous-message', {
+        left: $wrapper.offsetLeft,
+        top: $wrapper.offsetTop,
+        width: $wrapper.offsetWidth,
+        height: $wrapper.offsetHeight
+      });
+    });
+
+    var width = $wrapper.offsetWidth;
+    var height = $wrapper.offsetHeight;
+
+    document.body.addEventListener('mousemove', function(event) {
+      let x = event.clientX;
+      let y = event.clientY;
+      let left = $wrapper.offsetLeft;
+      let top = $wrapper.offsetTop;
+      let w_width = $wrapper.offsetWidth;
+      let h_height = $wrapper.offsetHeight;
+
+      if(drug_direction === 'left') {
+        $wrapper.style.left = x + 'px';
+        $wrapper.style.width = width-left - x + 'px';
+      } else if (drug_direction === 'right') {
+        $wrapper.style.width = (-left)+x + 'px';
+        $wrapper.style.left = width - x + 'px';
+      } else if (drug_direction === 'top') {
+        $wrapper.style.top = y + 'px';
+        $wrapper.style.height = height-top - y + 'px';
+      } else if (drug_direction === 'bottom') {
+        $wrapper.style.height = (-top)+y + 'px';
+        $wrapper.style.top = height - y + 'px';
+      }
+
+      if(x > left-12 && x < left+12) {
+        document.body.style.cursor = 'e-resize';
+      } else if (x > (w_width+left)-12 && x < (w_width+left)+12) {
+        document.body.style.cursor = 'e-resize';
+      } else if (y > top-12 && y < top+12) {
+        document.body.style.cursor = 'n-resize';
+      } else if (y > (h_height+top)-12 && y < (h_height+top)+12) {
+        document.body.style.cursor = 'n-resize';
+      } else {
+        document.body.style.cursor = 'auto';
+      }
+    });
   </script>
 </body>
 </html>

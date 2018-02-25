@@ -28,9 +28,9 @@ desktopCapturer.getSources({types: ['window', 'screen']}, (error, sources) => {
           mandatory: {
             chromeMediaSource: 'desktop',
             minWidth: 1280,
-            maxWidth: 1280,
+            maxWidth: 1920,
             minHeight: 720,
-            maxHeight: 720
+            maxHeight: 1080
           }
         }
       }).then((stream) => handleStream(stream))
@@ -41,26 +41,89 @@ desktopCapturer.getSources({types: ['window', 'screen']}, (error, sources) => {
 })
 }
 
+let global_data = {};
+// let global_left = 0;
+
 /*function handleStream (stream) {
     console.log("Stream: "+URL.createObjectURL(stream))
   document.querySelector('video').src = URL.createObjectURL(stream)
 }*/
 
+var video = document.createElement('video')
+
 function handleStream(stream) {
-    // document.querySelector('video').src = URL.createObjectURL(stream)
-    recorder = new MediaRecorder(stream);
-    blobs = [];
+    
+
+    video.src = URL.createObjectURL(stream)
+
+    video.addEventListener('timeupdate', drawFrame, false);
+
+    video.autoplay = true;
+
+    var canvas = document.createElement('canvas');
+
+    canvas.width = global_data.width;
+    canvas.height = global_data.height;
+
+    var ctx = canvas.getContext('2d');
+
+    // document.body.appendChild(canvas);
+
+    // recorder = new MediaRecorder(stream)
+    var array = [];
+    blobs = []
+
+    var new_stream = canvas.captureStream(60);
+
+    var video_new = document.createElement('video')
+    video_new.srcObject = new_stream;
+    video_new.autoplay = true;
+
+    recorder = new MediaRecorder(new_stream);
+
+    // document.body.appendChild(video_new);
+
+    console.log('ready...!!!');
     recorder.ondataavailable = function(event) {
         blobs.push(event.data);
+
+
 
         console.log("There " + blobs[0]);
 
         // console.log(blobs);
     };
 
-    recorder.onstop = function(e) {
 
-            var blob = new Blob(blobs, {type: 'video/webm'});
+    function drawFrame(e) {
+        this.pause();
+        ctx.drawImage(this, -global_data.left, -global_data.top);
+        // ctx.fillRect(20,20,150,100);
+        // canvas.toBlob(saveFrame, 'image/jpeg');
+        this.play();
+
+        
+
+
+    }
+
+/*    function saveFrame(blobe) {
+        console.log('blob: '+blobe);
+        blobs.push(blobe);
+    }*/
+
+    video.addEventListener('ended', function() {
+        console.log('ended video finally!!!!!!!');
+    }, false);
+
+    recorder.onstop = function(e) {
+        // video.stop();
+        console.log('on stop was here');
+        // URL.revokeObjectURL(stream);
+        video.src = "";
+            // video.pause();
+            console.log('on stop: '+blobs.length);
+            const blob = new Blob(blobs, {type: 'video/webm'});
              
             var buffer = toBuffer(blob, function (err, buffer) {
               if (err) throw err
@@ -87,12 +150,12 @@ function handleStream(stream) {
 
                 // console.log(arrayBuffer);
 
-                
+                createAnotherWindow();
             };
             fileReader.readAsArrayBuffer(blob);
 
             
-            createAnotherWindow();
+            
 
     }
 
@@ -175,8 +238,16 @@ document.getElementById('button_recorder').addEventListener('click', function(e)
     if (!record_process) {
         const $timer_id = document.getElementById('timer')
 
+        // var window_overflow = remote.getGlobal();
+        const { ipcRenderer } = require('electron');
+        ipcRenderer.send('record-message', 'record');
+
+        // console.log('overflow', window_overflow);
+
+        // window_overflow.setIgnoreMouseEvents(true);
+
+
         startRecording()
-        setTimeout(minimize, 1000)
         record_process = true
         console.log('start recording...')
 
@@ -184,8 +255,6 @@ document.getElementById('button_recorder').addEventListener('click', function(e)
             minutes = 0
 
         timer = setInterval(function() {
-            // console.log(seconds.toString().length)
-
             seconds++
 
             if(seconds >= 60) {
@@ -204,12 +273,8 @@ document.getElementById('button_recorder').addEventListener('click', function(e)
             if(minutes.toString().length === 1)
                 minutes_str = '0' + minutes;
 
-            // console.log('0' + seconds);
 
             $timer_id.innerHTML = minutes_str + ':' + seconds_str;
-            /*else
-                $timer_id.innerHTML = minutes + ':'+ seconds*/
-
         }, 1000)
     } else {
         // document.getElementsByClassName('wrapper2')[0].classList.remove('active')
@@ -219,7 +284,7 @@ document.getElementById('button_recorder').addEventListener('click', function(e)
         console.log('stop recording')
         clearInterval(timer)
 
-        minimize()
+        // minimize()
     }
 })
 
@@ -227,6 +292,15 @@ function minimize() {
     var window = remote.getCurrentWindow()
     window.minimize()
 }
+
+
+const ipcRenderer = require('electron').ipcRenderer
+
+ipcRenderer.on('info', (event, data) => {
+  console.log("left: ", data);
+  global_data = data;
+  // ipcMain.send('asynchronous-message', data);
+});
 
 /*document.getElementById('stop').addEventListener('click', function(e) {
     console.log('test');
@@ -303,7 +377,7 @@ function createAnotherWindow() {
   }))
 
   // Open the DevTools.
-  // videoWindow.webContents.openDevTools()
+  videoWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   videoWindow.on('closed', function () {
@@ -313,6 +387,51 @@ function createAnotherWindow() {
     videoWindow = null
   })
 }
+
+// createScreenOverflow();
+
+
+
+// var global_ = 5;
+
+
+/*function createScreenOverflow() {
+    console.log('screen overflow')
+    const mainWindow = remote.getCurrentWindow()
+
+  // Create the browser window.
+  overflowWindow = new BrowserWindow({skipTaskbar: true, frame: true, transparent: true, focusable: false, minimizable: false})
+  overflowWindow.setMenu(null)
+  overflowWindow.setAlwaysOnTop(true);
+  overflowWindow.setResizable(false);
+  // overflowWindow.setFullScreen(true);
+
+  // setTimeout(function() {
+
+
+  overflowWindow.setIgnoreMouseEvents(true);
+    // }, 5000);
+
+  overflowWindow.show()
+
+  // and load the index.html of the app.
+  overflowWindow.loadURL(url.format({
+    pathname: path.join(__dirname, './screen-overflow.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  // Open the DevTools.
+  overflowWindow.webContents.openDevTools()
+
+  // Emitted when the window is closed.
+  overflowWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    overflowWindow = null
+  })
+}*/
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

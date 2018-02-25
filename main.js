@@ -4,21 +4,24 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
+const ipcMain = require('electron').ipcMain
+// const ipcRenderer = require('electron').ipcRenderer
+
 const path = require('path')
 const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-// let videoWindow
+let overflowWindow
 
 function createWindow () {
   // Create the browser window.
   // mainWindow = new BrowserWindow({/*width: 490, height: 372,*/ useContentSize: true, frame: true, resizable: false, transparent: true})
   // mainWindow = new BrowserWindow({width: 592, height: 64, /*left: 0, top: 0,*/ transparent: true, frame: true})
 
-  mainWindow = new BrowserWindow({width: 592, height: 64, transparent: false, frame: false})
-  // mainWindow = new BrowserWindow({width: 1000, height: 450, transparent: true, frame: true})
+  mainWindow = new BrowserWindow({width: 592, height: 64, transparent: false, frame: false, focusable: true})
+  // mainWindow = new BrowserWindow({width: 1000, height: 450, transparent: true, frame: true, focusable: true})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -29,7 +32,7 @@ function createWindow () {
 
   mainWindow.setMenu(null);
   // mainWindow.setIgnoreMouseEvents(true);
-  mainWindow.setAlwaysOnTop(true);
+  mainWindow.setAlwaysOnTop(true, 2);
   // mainWindow.setResizable(true);
   // mainWindow.setFullScreen(true);
 
@@ -47,10 +50,66 @@ function createWindow () {
   })
 }
 
+
+function createOverflow() {
+  // const mainWindow = remote.getCurrentWindow()
+
+  // Create the browser window.
+  overflowWindow = new BrowserWindow({parent: mainWindow, skipTaskbar: true, frame: false, transparent: true, focusable: false, minimizable: false})
+  overflowWindow.setMenu(null)
+  overflowWindow.setAlwaysOnTop(true);
+  overflowWindow.setResizable(false);
+  overflowWindow.setFullScreen(true);
+  overflowWindow.setVisibleOnAllWorkspaces(true)
+  // overflowWindow.setContentProtection(true);
+
+/*  setTimeout(function() {
+    overflowWindow.setIgnoreMouseEvents(true);
+  }, 10000);*/
+
+  overflowWindow.show()
+
+  // and load the index.html of the app.
+  overflowWindow.loadURL(url.format({
+    pathname: path.join(__dirname, './screen-overflow.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  // Open the DevTools.
+  // overflowWindow.webContents.openDevTools()
+
+  // Emitted when the window is closed.
+  overflowWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    overflowWindow = null
+    mainWindow = null
+  })
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+app.on('ready', createOverflow)
 app.on('ready', createWindow)
+
+
+
+ipcMain.on('asynchronous-message', (event, data) => {
+  // console.log(data);
+  // ipcMain.send('asynchronous-message_info', data);
+  mainWindow.webContents.send('info' , data);
+});
+
+ipcMain.on('record-message', (event, data) => {
+  // console.log(data);
+  // ipcMain.send('asynchronous-message_info', data);
+  if(data === 'record')
+    overflowWindow.setIgnoreMouseEvents(true);
+});
+
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
