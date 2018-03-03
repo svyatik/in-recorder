@@ -302,6 +302,16 @@ ipcRenderer.on('info', (event, data) => {
   // ipcMain.send('asynchronous-message', data);
 });
 
+ipcRenderer.on('request', (event, data) => {
+    console.log('request: '+data);
+  // console.log("left: ", data);
+  if(data === 'stop') {
+    console.log('yes, we stop it!');
+    stopRecording();
+  }
+  // ipcMain.send('asynchronous-message', data);
+});
+
 /*document.getElementById('stop').addEventListener('click', function(e) {
     console.log('test');
     document.getElementsByClassName('wrapper2')[0].classList.remove('active')

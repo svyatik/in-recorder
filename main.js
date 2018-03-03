@@ -4,6 +4,30 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
+
+const ioHook = require('iohook');
+
+
+// 29 - CTRL,
+// 68 - F10
+
+/*let id = ioHook.registerShortcut([29, 65], (keys) => {
+  console.log('Shortcut called with keys:', keys)
+});*/
+
+ioHook.on("keydown", function(evt) {
+  if(evt.keycode === 68) {
+    console.log('--- stop recording ---');
+
+    mainWindow.webContents.send('request' , 'stop');
+  }
+});
+
+// ioHook.on("keydown",function(msg){console.log(msg);});
+
+ioHook.start();
+
+
 const ipcMain = require('electron').ipcMain
 // const ipcRenderer = require('electron').ipcRenderer
 
@@ -20,8 +44,8 @@ function createWindow () {
   // mainWindow = new BrowserWindow({/*width: 490, height: 372,*/ useContentSize: true, frame: true, resizable: false, transparent: true})
   // mainWindow = new BrowserWindow({width: 592, height: 64, /*left: 0, top: 0,*/ transparent: true, frame: true})
 
-  mainWindow = new BrowserWindow({width: 592, height: 64, transparent: false, frame: false, focusable: true})
-  // mainWindow = new BrowserWindow({width: 1000, height: 450, transparent: true, frame: true, focusable: true})
+  // mainWindow = new BrowserWindow({width: 592, height: 64, transparent: false, frame: false, focusable: true})
+  mainWindow = new BrowserWindow({width: 1000, height: 450, transparent: true, frame: true, focusable: true})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -37,7 +61,7 @@ function createWindow () {
   // mainWindow.setFullScreen(true);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -55,11 +79,11 @@ function createOverflow() {
   // const mainWindow = remote.getCurrentWindow()
 
   // Create the browser window.
-  overflowWindow = new BrowserWindow({parent: mainWindow, skipTaskbar: true, frame: false, transparent: true, focusable: false, minimizable: false})
+  overflowWindow = new BrowserWindow({parent: mainWindow, skipTaskbar: true, frame: true, transparent: false, focusable: true, minimizable: false})
   overflowWindow.setMenu(null)
   overflowWindow.setAlwaysOnTop(true);
   overflowWindow.setResizable(false);
-  overflowWindow.setFullScreen(true);
+  // overflowWindow.setFullScreen(true);
   overflowWindow.setVisibleOnAllWorkspaces(true)
   // overflowWindow.setContentProtection(true);
 
@@ -77,7 +101,7 @@ function createOverflow() {
   }))
 
   // Open the DevTools.
-  // overflowWindow.webContents.openDevTools()
+  overflowWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   overflowWindow.on('closed', function () {
@@ -127,6 +151,9 @@ app.on('activate', function () {
     createWindow()
   }
 })
+
+
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
