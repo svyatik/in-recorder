@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FabricJS Test</title>
+  <style>
+    body {
+      height: 95vh;
+      background-color: #eee;
+      margin: 0;
+    }
+
+    canvas {
+      width: 400px;
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.0.3/fabric.min.js"></script>
+  <script>
+    var canv = new fabric.Canvas('canvas', {
+      width: 400,
+      height: 400,
+      backgroundColor: '#fff',
+      selectable: false,
+      hasControls: false,
+      hasControls : false, hasBorders : false, lockMovementX : true, lockMovementY : true
+    });
+
+    canv.selection = false;
+    canv.hoverCursor = 'default';
+
+    var rect = new fabric.Rect({
+      // stroke: '#f00',
+      // strokeDashArray: [3],
+      // strokeWidth: 3,
+      width: 0,
+      height: 400,
+      fill: 'rgba(0,0,0,.2)',
+      top: 0,
+      left: 0,
+      selectable: false,
+      // hasControls : false, hasBorders : false, lockMovementX : true, lockMovementY : true
+    });
+
+    var rect2 = new fabric.Rect({
+      width: 0,
+      height: 400,
+      fill: 'rgba(0,0,0,.2)',
+      top: 0,
+      left: 400,
+      selectable: false,
+    });
+
+
+    function createLine(cords) {
+      return new fabric.Line(cords, {
+        fill: 'red',
+        stroke: 'red',
+        strokeWidth: 3,
+        selectable: false,
+        strokeDashArray: [7],
+        strokeLineJoin: 'round',
+        strokeLineCap: 'round'
+      });
+    }
+
+    function createRect(cords) {
+      return new fabric.Rect({
+        top: cords[0],
+        left: cords[1],
+        width: cords[2],
+        height: cords[3],
+        selectable: false,
+        fill: 'red',
+        /*width: 50,
+        height:50,
+        top:100,
+        left:100*/
+      });
+    }
+
+    var new_rect = createRect([50, 50, 100, 100]);
+
+    canv.add(new_rect);
+
+    var line = createLine([0, 0, 0, 400]);
+    var line_top = createLine([0, 0, 400, 0]);
+    var line_bottom = createLine([0, 397, 400, 397]);
+    var line_right = createLine([397, 0, 397, 397]);
+
+    // canv.add(rect);
+    canv.add(line);
+    canv.add(line_top);
+    canv.add(line_bottom);
+    canv.add(line_right);
+
+    canv.add(rect);
+    canv.add(rect2);
+
+    let drug = false;
+    canv.on('mouse:down', function(options) {
+      drug = true;
+    });
+
+    canv.on('mouse:up', function(options) {
+      drug = false;
+    });
+
+    // rect.left = 400;
+    // rect.width = 0;
+
+    canv.on('mouse:move', function(options) {
+      // console.log(options.e.clientX, options.e.clientY);
+
+      // console.log(line_top);
+      if(drug) {
+        line.set('left', options.e.clientX);
+
+        line_top.set('x1', options.e.clientX);
+        line_top.set('x2', 400-options.e.clientX);
+
+        line_bottom.set('x1', options.e.clientX);
+        line_bottom.set('x2', 400-options.e.clientX);
+
+        line_right.set('x1', 400-options.e.clientX);
+        line_right.set('x2', 400-options.e.clientX);
+
+        rect.set('width', options.e.clientX);
+
+        rect2.set('left', 400-options.e.clientX+3);
+        rect2.set('width', 400-options.e.clientX);
+
+      /*rect.set('left', options.e.clientX);
+      rect.set('width', 400 - options.e.clientX*2);*/
+      // rect.setCoords();
+      // rect.width = 100;
+
+      canv.renderAll();
+
+      console.log(rect.width, rect.left, rect.height, rect.top);
+
+      // canv.renderAll();
+      }
+    });
+
+    // setInterval(function() {
+      // console.log('render');
+      // canv.renderAll();
+    // }, 16)
+
+
+
+
+
+    // canv.renderAll();
+  </script>
+</body>
+</html>
