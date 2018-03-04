@@ -78,30 +78,33 @@ function createWindow () {
 function createOverflow() {
   // const mainWindow = remote.getCurrentWindow()
 
-  // Create the browser window.
-  overflowWindow = new BrowserWindow({parent: mainWindow, skipTaskbar: true, frame: false, transparent: true, focusable: false, minimizable: false})
+
+  // Production:
+/*  overflowWindow = new BrowserWindow({parent: mainWindow, skipTaskbar: true, frame: false, transparent: true, focusable: false, minimizable: false})
   overflowWindow.setMenu(null)
   overflowWindow.setAlwaysOnTop(true);
   overflowWindow.setResizable(false);
   overflowWindow.setFullScreen(true);
   overflowWindow.setVisibleOnAllWorkspaces(true)
-  overflowWindow.setContentProtection(true);
+  overflowWindow.setContentProtection(true);*/
 
-/*  setTimeout(function() {
-    overflowWindow.setIgnoreMouseEvents(true);
-  }, 10000);*/
+  // Development:
+  overflowWindow = new BrowserWindow({parent: mainWindow, skipTaskbar: true, frame: true, transparent: false, focusable: true, minimizable: false})
+  overflowWindow.setMenu(null)
+  overflowWindow.setAlwaysOnTop(true);
+  overflowWindow.webContents.openDevTools()
+
+
 
   overflowWindow.show()
 
   // and load the index.html of the app.
   overflowWindow.loadURL(url.format({
-    pathname: path.join(__dirname, './screen-overflow.html'),
+    pathname: path.join(__dirname, './src/screen-overflow.html'),
     protocol: 'file:',
     slashes: true
   }))
 
-  // Open the DevTools.
-  // overflowWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   overflowWindow.on('closed', function () {
