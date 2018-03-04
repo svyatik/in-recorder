@@ -52,6 +52,8 @@ let global_data = {};
 var video = document.createElement('video')
 
 function handleStream(stream) {
+
+    console.log('stream!!!');
     
 
     video.src = URL.createObjectURL(stream)
@@ -62,6 +64,14 @@ function handleStream(stream) {
 
     var canvas = document.createElement('canvas');
 
+    console.log("GLOBAL" +global_data.width);
+/*    global_data = {
+        width: 1200,
+        height: 480,
+        x: 0,
+        y: 0
+    };
+*/
     canvas.width = global_data.width;
     canvas.height = global_data.height;
 
@@ -97,7 +107,8 @@ function handleStream(stream) {
 
     function drawFrame(e) {
         this.pause();
-        ctx.drawImage(this, -global_data.left, -global_data.top);
+
+        ctx.drawImage(this, -global_data.x, -global_data.y);
         // ctx.fillRect(20,20,150,100);
         // canvas.toBlob(saveFrame, 'image/jpeg');
         this.play();
@@ -150,7 +161,7 @@ function handleStream(stream) {
 
                 // console.log(arrayBuffer);
 
-                createAnotherWindow();
+                // createAnotherWindow();
             };
             fileReader.readAsArrayBuffer(blob);
 
@@ -297,8 +308,9 @@ function minimize() {
 const ipcRenderer = require('electron').ipcRenderer
 
 ipcRenderer.on('info', (event, data) => {
-  console.log("left: ", data);
+  // console.log("left: ", data);
   global_data = data;
+  console.log(global_data);
   // ipcMain.send('asynchronous-message', data);
 });
 

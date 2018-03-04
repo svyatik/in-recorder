@@ -1,9 +1,9 @@
 const {ipcRenderer} = require('electron');
 
-/*const $black_left   =  document.getElementById('black_left'),
-$black_right  =  document.getElementById('black_right'),
-$black_top    =  document.getElementById('black_top'),
-$black_bottom =  document.getElementById('black_bottom');*/
+const $black_left   =  document.getElementById('black_left'),
+      $black_right  =  document.getElementById('black_right'),
+      $black_top    =  document.getElementById('black_top'),
+      $black_bottom =  document.getElementById('black_bottom');
 
 (function () {
     'use strict';
@@ -39,6 +39,20 @@ $black_bottom =  document.getElementById('black_bottom');*/
         $wrapper.style.width = rectangle.width + 'px';
         $wrapper.style.top = rectangle.y + 'px';
         $wrapper.style.height = rectangle.height + 'px';
+
+        $black_left.style.width = rectangle.x + 'px';
+
+        $black_right.style.width = global_width - (rectangle.x + rectangle.width) + 'px';
+        $black_right.style.left = rectangle.x + rectangle.width + 'px';
+
+        $black_top.style.height = rectangle.y + 'px';
+        $black_top.style.left = rectangle.x + 'px';
+        $black_top.style.width = rectangle.width + 'px';
+
+        $black_bottom.style.height = global_height - (rectangle.y + rectangle.height) + 'px';
+        $black_bottom.style.top = rectangle.y + rectangle.height + 'px';
+        $black_bottom.style.left = rectangle.x + 'px';
+        $black_bottom.style.width = rectangle.width + 'px';
 
         return true;
     }
