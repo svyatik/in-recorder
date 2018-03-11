@@ -7,3 +7,5 @@ npm start --enable-transparent-visuals --disable-gpu
 
 free drawing with fabric.js:
 https://jsfiddle.net/y84hf37a/13/
+
+electron-packager ./ ./dist/ --platform=linux --arch=x64 -asar=true --overwrite --ignore="SERVER" --ignore="screenshots" --ignore="dist"

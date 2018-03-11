@@ -148,6 +148,7 @@ function handleStream(stream) {
                         console.error('Failed to save video ' + err);
                     } else {
                         console.log('Saved video: ' + file);
+                        createAnotherWindow();
                     }
                 });
             })
@@ -307,6 +308,8 @@ function minimize() {
 
 const ipcRenderer = require('electron').ipcRenderer
 
+// ipcRenderer.send('record-message', 'start_recording');
+
 ipcRenderer.on('info', (event, data) => {
   // console.log("left: ", data);
   global_data = data;
@@ -399,7 +402,7 @@ function createAnotherWindow() {
   }))
 
   // Open the DevTools.
-  videoWindow.webContents.openDevTools()
+  // videoWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   videoWindow.on('closed', function () {

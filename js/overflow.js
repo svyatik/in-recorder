@@ -1,9 +1,17 @@
-const {ipcRenderer} = require('electron');
+const ipcRenderer = require('electron').ipcRenderer
 
 const $black_left   =  document.getElementById('black_left'),
       $black_right  =  document.getElementById('black_right'),
       $black_top    =  document.getElementById('black_top'),
       $black_bottom =  document.getElementById('black_bottom');
+
+const $wrapper_middle = document.getElementById('wrapper-middle');
+
+ipcRenderer.on('action', (event, data) => {
+    if(data === 'disable') {
+        $wrapper_middle.style.display = 'none';
+    }
+});
 
 (function () {
     'use strict';
@@ -157,7 +165,7 @@ const $black_left   =  document.getElementById('black_left'),
                 move(new_cords);
             }
 
-            if (property === 'center') {
+            if (drug_direct === 'center') {
                 if (new_cords.x > 0 && rectangle.width + new_cords.x < global_width) {
                     move({x: new_cords.x});
                 }

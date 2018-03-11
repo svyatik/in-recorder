@@ -44,8 +44,8 @@ function createWindow () {
   // mainWindow = new BrowserWindow({/*width: 490, height: 372,*/ useContentSize: true, frame: true, resizable: false, transparent: true})
   // mainWindow = new BrowserWindow({width: 592, height: 64, /*left: 0, top: 0,*/ transparent: true, frame: true})
 
-  // mainWindow = new BrowserWindow({width: 592, height: 64, transparent: false, frame: false, focusable: true})
-  mainWindow = new BrowserWindow({width: 1000, height: 450, transparent: true, frame: true, focusable: true})
+  mainWindow = new BrowserWindow({width: 592, height: 64, transparent: false, frame: false, focusable: true})
+  // mainWindow = new BrowserWindow({width: 1000, height: 450, transparent: true, frame: true, focusable: true})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -61,7 +61,7 @@ function createWindow () {
   // mainWindow.setFullScreen(true);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -132,8 +132,10 @@ ipcMain.on('asynchronous-message', (event, data) => {
 ipcMain.on('record-message', (event, data) => {
   // console.log(data);
   // ipcMain.send('asynchronous-message_info', data);
-  if(data === 'record')
+  if(data === 'record') {
     overflowWindow.setIgnoreMouseEvents(true);
+    overflowWindow.webContents.send('action' , 'disable');
+  }
 });
 
 
@@ -153,8 +155,6 @@ app.on('activate', function () {
     createWindow()
   }
 })
-
-
 
 
 // In this file you can include the rest of your app's specific main process
