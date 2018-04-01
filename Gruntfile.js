@@ -9,14 +9,14 @@ module.exports = function(grunt) {
     less: {
       development: {
         options: {
-          compress: true,
-          yuicompress: true,
-          optimization: 2,
+          // compress: true,
+          // yuicompress: true,
+          // optimization: 2,
           sourceMap: true,
-          sourceMapFilename: 'css/application.css.map'
+          sourceMapFilename: 'application.css.map'
         },
         files: {
-          "css/compiled.css": "css/application.less" // destination file and source file
+          "css/application.css": "css/application.less" // destination file and source file
         }
       }
     },

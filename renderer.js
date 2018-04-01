@@ -238,7 +238,9 @@ var record_process = false;
 let timer;
 document.getElementById('button_recorder').addEventListener('click', function(e) {
     // createAnotherWindow();
-    console.log('test')
+    console.log('test');
+
+    return false;
 
     // setTimeout(minimize, 1000);
 

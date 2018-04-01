@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Application</title>
-  <link rel="stylesheet" href="css/compiled.css">
+  <link rel="stylesheet" href="css/application.css">
 </head>
 <body>
   <div class="wrapper">
-    <div class="bgroup left-group">
-      <div id="movable">
-        <i class="icon icon-dot-3"></i>
-      </div>
+    <div class="bgroup" id="left_group">
+      <span id="left-group-back"></span>
+      <div id="movable"></div>
       <button class="ellipse ellipse-red no-drag" id="button_recorder">
-        <span class="ellipse-front"></span>
+        <!-- <span class="ellipse-front"></span> -->
+        <svg width="48px" height="48px" viewBox="0 0 48 48" class="ellipse-front" id="test">
+          <circle cx="23" cy="23" r="21" fill="" />
+        </svg>
         <span class="ellipse-record"></span>
-        <!-- <i class="icon icon-record"></i> -->
       </button>
     </div>
 
@@ -25,25 +26,60 @@
       <div class="time_messages">
         <span id="msg_1" class="active">Please, consider to <b>log_in</b></span>
         <span id="msg_2">Recording...</span>
+        <span id="msg_3">Paused. Long press to stop</span>
         <!-- <span id="msg_2" class="active">Check this to select specific area</span> -->
-        
       </div>
     </div>
 
 
-    <div class="buttons_group">
-      <button class="icon-button icon-button-norm no-drag active" id="button_region">
-        <img src="img/select-region.svg" alt="">
-      </button>
+    <div class="buttons_group" id="buttons_group">
+      <div class="group-first">
+        <button class="icon-button icon-button-norm no-drag anim-top active" id="button_region">
+          <img src="img/select-region.svg" alt="">
+        </button>
 
-      <button class="icon-button icon-button-norm no-drag" id="button_full_screen">
-        <img src="img/full-screen.svg" alt="">
-      </button>
+        <button class="icon-button icon-button-norm no-drag anim-top" id="button_full_screen">
+          <img src="img/full-screen.svg" alt="">
+        </button>
+
+        <span class="buttons-separate"></span>
+
+        <button class="icon-button icon-button-norm no-drag anim-top disabled" id="button_sound"></button>
+      </div>
+
+      <div class="group-second">
+        <button class="icon-button icon-button-norm no-drag anim-bottom" id="button_pencil">
+          <img src="img/pencil.svg" alt="">
+        </button>
+
+        <div id="range">
+          <span id="range_circle"></span>
+        </div>
+
+        <ul class="colors" id="colors">
+          <li data-color="#FFC312" style="background-color: #FFC312"></li>
+          <li data-color="#C4E538" style="background-color: #C4E538"></li>
+          <li data-color="#12CBC4" style="background-color: #12CBC4"></li>
+          <li data-color="#FDA7DF" style="background-color: #FDA7DF"></li>
+          <li data-color="#ED4C67" style="background-color: #ED4C67"></li>
+          <li class="color-white" data-color="#fff" style="background-color: #fff"></li>
+          <br>
+          <li data-color="#EE5A24" style="background-color: #EE5A24"></li>
+          <li data-color="#009432" style="background-color: #009432"></li>
+          <li data-color="#0652DD" style="background-color: #0652DD"></li>
+          <li data-color="#9980FA" style="background-color: #9980FA"></li>
+          <li data-color="#833471" style="background-color: #833471"></li>
+          <li data-color="#888" style="background-color: #888"></li>
+          <br>
+          <li data-color="#EA2027" style="background-color: #EA2027"></li>
+          <li data-color="#006266" style="background-color: #006266"></li>
+          <li data-color="#1B1464" style="background-color: #1B1464"></li>
+          <li data-color="#5758BB" style="background-color: #5758BB"></li>
+          <li data-color="#6F1E51" style="background-color: #6F1E51"></li>
+          <li data-color="#000" style="background-color: #000"></li>
+        </ul>
+      </div>
     </div>
-
-    <button class="icon-button icon-button-norm no-drag" id="button_login">
-      <img src="img/login.svg" alt="">
-    </button>
 
     <div class="bgroup right-group">
       <button class="icon-button icon-button-close no-drag" id="btn_close">
@@ -53,9 +89,7 @@
   </div>
 
 
-  <script>
-    // You can also require other files to run in this process
-    require('./renderer.js')
-  </script>
+  <script src="js/application.js"></script>
 </body>
 </html>
+

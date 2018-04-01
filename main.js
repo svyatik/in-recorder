@@ -42,9 +42,9 @@ let overflowWindow
 function createWindow () {
   // Create the browser window.
   // mainWindow = new BrowserWindow({/*width: 490, height: 372,*/ useContentSize: true, frame: true, resizable: false, transparent: true})
-  // mainWindow = new BrowserWindow({width: 592, height: 64, /*left: 0, top: 0,*/ transparent: true, frame: true})
+  // mainWindow = new BrowserWindow({width: 589, height: 64, /*left: 0, top: 0,*/ transparent: true, frame: true})
 
-  mainWindow = new BrowserWindow({width: 592, height: 64, transparent: false, frame: false, focusable: true})
+  mainWindow = new BrowserWindow({width: 589, height: 64, transparent: false, frame: false, focusable: true})
   // mainWindow = new BrowserWindow({width: 1000, height: 450, transparent: true, frame: true, focusable: true})
 
   // and load the index.html of the app.
